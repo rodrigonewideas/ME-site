@@ -1,9 +1,15 @@
 ---
+import Icon from './Icon.astro';
 ---
-<section class="bg-primary py-16 md:py-20">
-  <div class="section-container text-center" data-reveal>
-    <h2 class="mx-auto max-w-2xl text-2xl font-bold text-white md:text-3xl">Veja o seu próprio acervo sendo lido pela IA.</h2>
-    <p class="mx-auto mt-3 max-w-xl text-white/80">Uma demonstração com o seu cenário — em minutos você vê o que tem, o que falta e quem cuida.</p>
-    <a href="#demo" class="btn-primary mt-7">Agendar demonstração</a>
+<section class="canvas-dark grid-dots relative overflow-hidden py-20 md:py-24">
+  <div class="glow glow-emerald glow-pulse" style="width:560px;height:280px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.45"></div>
+  <div class="section-container relative z-10 text-center" data-reveal>
+    <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white md:text-4xl">
+      Veja o seu próprio acervo <span class="text-gradient">sendo lido pela IA</span>.
+    </h2>
+    <p class="mx-auto mt-4 max-w-xl text-slate-300">
+      Uma demonstração com o seu cenário — em minutos você vê o que tem, o que falta e quem cuida.
+    </p>
+    <a href="#demo" class="btn-primary mt-8">Agendar demonstração <Icon name="arrow-right" class="h-4 w-4" /></a>
   </div>
 </section>

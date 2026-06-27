@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0f6e56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="m3 7 9 4 9-4"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Malote Eletrônico IA">
+  <rect width="32" height="32" rx="7" fill="#0D3773"/>
+  <line x1="9" y1="12" x2="23" y2="12" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+  <line x1="9" y1="17" x2="23" y2="17" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+  <line x1="9" y1="22" x2="23" y2="22" stroke="#1FAD72" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="0.1 4"/>
+</svg>

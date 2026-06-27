@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ENDPOINT = (import.meta as any).env?.PUBLIC_LEAD_ENDPOINT || '/api/lead';
 const COMERCIAL = 'comercial@maloteeletronico.com.br';
@@ -28,6 +28,12 @@ export default function LeadForm() {
   const [state, setState] = useState<State>('idle');
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const sentRef = useRef<HTMLDivElement>(null);
+
+  // Ao confirmar, traz a mensagem de sucesso para o centro da tela.
+  useEffect(() => {
+    if (state === 'sent') sentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [state]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -64,11 +70,11 @@ export default function LeadForm() {
 
   if (state === 'sent') {
     return (
-      <div className="card-base mx-auto max-w-2xl p-8 text-center shadow-enterprise md:p-10">
+      <div ref={sentRef} className="card-base mx-auto max-w-2xl scroll-mt-28 p-8 text-center shadow-enterprise md:p-10">
         <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mx-auto text-secondary"><circle cx="12" cy="12" r="10" /><polyline points="9 12 12 15 16 9" /></svg>
         <h3 className="mt-4 text-2xl font-bold text-foreground">Recebemos seu contato</h3>
         <p className="mt-3 text-muted-foreground">
-          Enviamos uma confirmação para <strong>{email}</strong>. Em breve um responsável retorna pessoalmente.
+          Em breve um responsável retorna pessoalmente pelo e-mail <strong>{COMERCIAL}</strong>.
         </p>
       </div>
     );

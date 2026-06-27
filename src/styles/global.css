@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Inter variavel self-hosted (sem CDN — respeita a regra de privacidade) */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-variable.woff2') format('woff2');
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 215 25% 15%;
@@ -22,16 +31,18 @@
 }
 
 .dark {
-  --background: 215 30% 8%;
-  --foreground: 0 0% 98%;
-  --card: 215 25% 12%;
-  --muted: 215 25% 15%;
-  --muted-foreground: 215 15% 60%;
-  --border: 215 20% 20%;
-  --primary: 155 70% 45%;
-  --secondary: 215 60% 50%;
-  --accent: 155 40% 20%;
-  --navy: 215 40% 14%;
+  --background: 215 52% 6%;          /* canvas escuro profundo */
+  --foreground: 210 30% 96%;         /* quase branco, levemente frio */
+  --card: 215 36% 12%;
+  --muted: 215 40% 11%;              /* bandas tonalizadas (alternancia) */
+  --muted-foreground: 214 18% 67%;   /* slate legivel */
+  --border: 215 26% 20%;
+  --primary: 152 62% 50%;            /* emerald (acento unico) */
+  --primary-foreground: 215 60% 7%;
+  --secondary: 152 62% 50%;          /* emerald (unifica verde/azul) */
+  --secondary-foreground: 215 60% 7%;
+  --accent: 152 40% 16%;
+  --navy: 215 45% 10%;
 }
 
 html { scroll-behavior: smooth; }
@@ -40,20 +51,63 @@ body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-feature-settings: 'cv05' 1, 'cv11' 1, 'ss01' 1; /* Inter: 'l' com cauda, 'a' de uma andar, '1' sem serifa */
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Escala tipografica intencional (Inter ajustada, nao "neutra de delivery") */
+h1, h2, h3 { letter-spacing: -0.02em; }
+h1 { font-weight: 700; }
+h2, h3 { font-weight: 600; }
 
 @layer components {
   .section-container { @apply max-w-7xl mx-auto px-4 md:px-8; }
   .gradient-hero { background: linear-gradient(135deg, hsl(var(--hero-gradient-start)), hsl(var(--hero-gradient-end))); }
   .shadow-enterprise { box-shadow: 0 8px 24px -12px hsl(215 40% 20% / 0.18); }
   .shadow-enterprise-lg { box-shadow: 0 18px 50px -18px hsl(215 40% 20% / 0.28); }
-  .eyebrow { @apply inline-block px-4 py-1.5 bg-secondary/10 text-secondary rounded-full text-sm font-semibold; }
+  .eyebrow { @apply inline-block px-4 py-1.5 bg-secondary/10 text-secondary rounded-full text-sm font-semibold uppercase tracking-wider; }
   .card-base { @apply bg-card border border-border rounded-2xl; }
-  .btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-secondary px-6 py-3 font-semibold text-white transition-all hover:bg-secondary/90 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary; }
-  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10; }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400;
+    color: #04150E; background: linear-gradient(180deg, #4ADE9A, #22C083); box-shadow: 0 10px 30px -8px rgba(16,185,129,.55);
+  }
+  .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10; }
+
+  /* Header dark-glass: fica mais opaco/escuro ao rolar (classe alternada por JS) */
+  .site-header { @apply transition-all duration-300; background: rgba(7,13,23,.55); }
+  .site-header.is-scrolled { background: rgba(7,13,23,.88); box-shadow: 0 10px 30px -18px rgba(0,0,0,.8); border-color: rgba(255,255,255,.10); }
+
+  /* Link de nav com underline animado (cresce do centro no hover/foco) */
+  .nav-link { @apply relative rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 12px; right: 12px; bottom: 6px; height: 2px;
+    background: hsl(var(--secondary)); border-radius: 2px;
+    transform: scaleX(0); transform-origin: center; transition: transform .25s ease;
+  }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+
+  /* Botao de tema (toggle claro/escuro/sistema) */
+  .theme-toggle { @apply inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary; }
 }
+
+/* Lift sutil em cards interativos (gentil; reduced-motion ja zera transicoes) */
+.card-base { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.card-base.card-hover:hover { transform: translateY(-3px); box-shadow: 0 18px 50px -18px hsl(215 40% 20% / 0.28); }
+
+/* No tema dark/tech, todo card vira vidro com realce e hover emerald */
+.dark .card-base {
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.018));
+  border-color: rgba(255,255,255,.09);
+  box-shadow: inset 0 1px 0 0 rgba(255,255,255,.05);
+}
+.dark .card-base:hover { border-color: rgba(52,211,153,.35); }
+
+/* Toggle de tema: exibe so o icone do estado escolhido (claro/escuro/sistema) */
+.theme-toggle svg { display: none; }
+.theme-toggle[data-theme="light"]  .icon-sun    { display: block; }
+.theme-toggle[data-theme="dark"]   .icon-moon   { display: block; }
+.theme-toggle[data-theme="system"] .icon-system { display: block; }
 
 /* Reveal on scroll — progressive enhancement, opt-out via reduced motion */
 [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; will-change: opacity, transform; }
@@ -64,3 +118,107 @@ body {
   [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+
+/* =========================================================================
+   Direcao "Tech escuro / 2026" — secoes ancora sempre escuras, com
+   profundidade (glows + grade), vidro e movimento. Cores explicitas (nao
+   dependem do tema claro/escuro). Emerald = sinal de "encontrado/IA".
+   ========================================================================= */
+.canvas-dark {
+  position: relative;
+  isolation: isolate;
+  color: #E6EDF5;
+  background:
+    radial-gradient(1100px 560px at 72% -8%, rgba(16,185,129,.14), transparent 60%),
+    radial-gradient(900px 520px at 8% 4%, rgba(13,55,115,.45), transparent 62%),
+    linear-gradient(180deg, #070D17, #060B14);
+}
+.canvas-dark ::selection { background: rgba(52,211,153,.30); }
+
+/* grade de pontos (evoca ledger de documentos), some nas bordas */
+.grid-dots::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(ellipse 95% 75% at 50% 28%, #000 28%, transparent 76%);
+  mask-image: radial-gradient(ellipse 95% 75% at 50% 28%, #000 28%, transparent 76%);
+}
+
+/* halos de luz */
+.glow { position: absolute; border-radius: 9999px; filter: blur(72px); z-index: -1; pointer-events: none; }
+.glow-emerald { background: rgba(16,185,129,.35); }
+.glow-blue    { background: rgba(37,99,235,.28); }
+.glow-pulse   { animation: glowPulse 7s ease-in-out infinite; }
+
+/* painel de vidro (mockup de produto) */
+.glass-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 1rem;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 40px 90px -36px rgba(0,0,0,.75), inset 0 1px 0 0 rgba(255,255,255,.06);
+}
+.window-dots { display: inline-flex; gap: 6px; }
+.window-dots i { width: 10px; height: 10px; border-radius: 9999px; display: block; }
+
+/* texto com gradiente emerald + leve brilho que percorre */
+.text-gradient {
+  background: linear-gradient(100deg, #34D399, #5EEAD4 50%, #34D399);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+
+/* "o que falta": sublinhado tracejado que flui (a assinatura, em movimento) */
+.missing-underline { position: relative; white-space: nowrap; }
+.missing-underline::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -.14em; height: 3px; border-radius: 2px;
+  background-image: repeating-linear-gradient(90deg, #34D399 0 9px, transparent 9px 17px);
+  background-size: 17px 3px; opacity: .95; animation: dashFlow 1.1s linear infinite;
+}
+
+/* pill/glass utilitarios sobre escuro */
+.pill-glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(6px); }
+.dot-live { width: 8px; height: 8px; border-radius: 9999px; background: #34D399; box-shadow: 0 0 0 0 rgba(52,211,153,.5); animation: glowPulse 2.4s ease-in-out infinite; }
+
+/* botoes sobre escuro */
+.btn-emerald {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-[#04150E] transition-transform;
+  background: linear-gradient(180deg, #4ADE9A, #22C083);
+  box-shadow: 0 10px 30px -8px rgba(16,185,129,.6);
+}
+.btn-emerald:hover { transform: translateY(-2px); }
+.btn-outline-light { @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-white/90 transition-colors; border: 1px solid rgba(255,255,255,.22); }
+.btn-outline-light:hover { background: rgba(255,255,255,.08); }
+
+/* cartoes de documento flutuando no fundo do hero */
+.float-card { animation: floaty 8s ease-in-out infinite; }
+.float-card.d1 { animation-delay: -2s; }
+.float-card.d2 { animation-delay: -4s; }
+.float-card.d3 { animation-delay: -6s; }
+
+/* scanline varrendo o painel (a IA "lendo" o acervo) */
+.scan-wrap { position: relative; overflow: hidden; }
+.scan-wrap .scanline {
+  content: ''; position: absolute; left: 0; right: 0; top: -28%; height: 28%; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(52,211,153,.18), transparent);
+  animation: scan 3.4s cubic-bezier(.6,0,.4,1) infinite;
+}
+
+/* linha do acervo entrando em sequencia (dispara quando a secao entra na viewport) */
+.rise { opacity: 0; animation: riseIn .6s ease forwards; animation-play-state: paused; }
+[data-reveal].is-visible .rise { animation-play-state: running; }
+
+/* a linha que FALTA: celula fantasma + halo */
+.ghost-cell {
+  border: 1.5px dashed rgba(52,211,153,.6); border-radius: 6px; color: rgba(52,211,153,.85);
+  background: rgba(52,211,153,.05); animation: ghostPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes shimmer   { to { background-position: 200% center; } }
+@keyframes dashFlow  { to { background-position: 17px 0; } }
+@keyframes floaty    { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+@keyframes scan      { 0% { top: -28% } 60%,100% { top: 100% } }
+@keyframes riseIn    { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+@keyframes glowPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5) } 50% { box-shadow: 0 0 0 7px rgba(52,211,153,0) } }
+@keyframes ghostPulse{ 0%,100% { border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.04) } 50% { border-color: rgba(52,211,153,.8); background: rgba(52,211,153,.10) } }

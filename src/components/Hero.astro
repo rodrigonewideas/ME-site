@@ -7,38 +7,67 @@ const chips = [
   { icon: 'alert-circle', label: 'Revela o que falta' },
 ];
 ---
-<section id="inicio" class="gradient-hero relative flex min-h-screen items-center justify-center overflow-hidden pt-28 pb-16">
-  <div class="section-container relative z-10 text-center">
-    <span class="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
-      Plataforma de inteligência documental
-    </span>
+<section id="inicio" class="canvas-dark grid-dots relative flex min-h-screen items-center overflow-hidden pt-28 pb-20">
+  <!-- halos de luz -->
+  <div class="glow glow-emerald glow-pulse" style="width:520px;height:520px;top:-160px;right:-80px"></div>
+  <div class="glow glow-blue" style="width:480px;height:480px;bottom:-180px;left:-120px"></div>
 
-    <h1 class="mx-auto mt-6 max-w-5xl text-4xl font-bold leading-[1.1] text-white md:text-6xl xl:text-7xl">
-      Entenda o acervo inteiro.<br />
-      <span class="text-secondary">Inclusive o que está faltando.</span>
-    </h1>
-
-    <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
-      Uma IA que classifica o tipo de cada documento e identifica o dono. E que, por saber disso,
-      mostra o que deveria estar no acervo e não está.
-    </p>
-
-    <div class="mt-7 flex flex-wrap justify-center gap-3">
-      {chips.map((c) => (
-        <div class="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
-          <Icon name={c.icon} class="h-4 w-4 text-secondary" />
-          <span class="text-sm font-medium text-white">{c.label}</span>
-        </div>
-      ))}
+  <!-- cartoes de documento flutuando no fundo -->
+  <div class="pointer-events-none absolute inset-0 z-0 hidden lg:block" aria-hidden="true">
+    <div class="float-card d1 absolute left-[6%] top-[26%] w-40 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
+      <div class="mb-2 h-1.5 w-10 rounded bg-white/25"></div>
+      <div class="space-y-1.5"><div class="h-1.5 w-full rounded bg-white/15"></div><div class="h-1.5 w-2/3 rounded bg-white/15"></div></div>
     </div>
+    <div class="float-card d2 absolute left-[2%] bottom-[16%] w-44 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.05] p-3 backdrop-blur-sm">
+      <div class="mb-2 flex items-center gap-1.5"><span class="dot-live"></span><div class="h-1.5 w-12 rounded bg-emerald-300/40"></div></div>
+      <div class="space-y-1.5"><div class="h-1.5 w-full rounded bg-white/15"></div><div class="h-1.5 w-1/2 rounded border border-dashed border-emerald-400/60"></div></div>
+    </div>
+    <div class="float-card d3 absolute right-[5%] bottom-[12%] w-36 rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
+      <div class="mb-2 h-1.5 w-8 rounded bg-white/25"></div>
+      <div class="space-y-1.5"><div class="h-1.5 w-full rounded bg-white/15"></div><div class="h-1.5 w-3/4 rounded bg-white/15"></div></div>
+    </div>
+  </div>
 
-    <p class="mt-5 text-sm text-white/65">Para RH, crédito, jurídico, compliance — onde controlar documento é parte do trabalho.</p>
+  <div class="section-container relative z-10">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+      <!-- copy -->
+      <div class="text-center lg:text-left">
+        <span class="pill-glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-white/90">
+          <span class="dot-live"></span> Inteligência documental com IA
+        </span>
 
-    <TypingQuery client:visible />
+        <h1 class="mx-auto mt-6 max-w-2xl text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-6xl lg:mx-0 lg:text-[64px]">
+          Entenda o acervo inteiro.<br />
+          Inclusive <span class="text-gradient missing-underline">o que falta</span>.
+        </h1>
 
-    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-      <a href="#demo" class="btn-primary">Agendar demonstração</a>
-      <a href="#problema" class="btn-ghost">Ver como funciona</a>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300/90 lg:mx-0">
+          Uma IA que classifica o tipo de cada documento e identifica o dono — e que, por saber disso,
+          mostra o que <strong class="font-semibold text-white">deveria estar no acervo e não está</strong>.
+        </p>
+
+        <div class="mt-7 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+          {chips.map((c) => (
+            <div class="pill-glass flex items-center gap-2 rounded-full px-3.5 py-1.5">
+              <Icon name={c.icon} class="h-4 w-4 text-emerald-300" />
+              <span class="text-sm font-medium text-white/90">{c.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+          <a href="#demo" class="btn-emerald">Agendar demonstração <Icon name="arrow-right" class="h-4 w-4" /></a>
+          <a href="#problema" class="btn-outline-light">Ver como funciona</a>
+        </div>
+
+        <p class="mt-6 text-sm text-slate-400">Para RH, crédito, jurídico e compliance — onde controlar documento é parte do trabalho.</p>
+      </div>
+
+      <!-- terminal de busca semantica (animado) -->
+      <div class="relative">
+        <div class="glow glow-emerald" style="width:340px;height:340px;top:10%;left:20%;opacity:.5"></div>
+        <TypingQuery client:visible />
+      </div>
     </div>
   </div>
 </section>

@@ -1,0 +1,25 @@
+---
+/*
+ * Wordmark do Malote Eletronico IA.
+ * Assinatura: a "linha que falta" — duas linhas solidas (documentos do acervo)
+ * e uma terceira tracejada na cor de destaque = o documento que a IA aponta
+ * que deveria existir e nao existe. Estrutura em currentColor (adapta ao tema);
+ * a linha que falta usa --secondary (a unica cor da marca).
+ */
+interface Props { class?: string; markClass?: string; }
+const { class: klass = '', markClass = 'h-9 w-9' } = Astro.props;
+---
+<span class:list={['inline-flex items-center gap-2.5', klass]}>
+  <svg class={markClass} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <!-- carta de tras (acervo empilhado) -->
+    <rect x="11" y="5" width="16" height="20" rx="3" stroke="currentColor" stroke-width="2" opacity="0.32" />
+    <!-- carta da frente -->
+    <rect x="5" y="8" width="16" height="20" rx="3" fill="hsl(var(--background))" stroke="currentColor" stroke-width="2" />
+    <!-- documentos presentes -->
+    <line x1="9" y1="15" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    <line x1="9" y1="19" x2="17" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    <!-- o documento que falta -->
+    <line x1="9" y1="23" x2="17" y2="23" stroke="hsl(var(--secondary))" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.1 3.4" />
+  </svg>
+  <span class="text-[15px] font-bold leading-tight tracking-tight">Malote&nbsp;Eletrônico <span class="text-secondary">IA</span></span>
+</span>
