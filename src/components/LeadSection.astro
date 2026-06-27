@@ -1,0 +1,11 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import LeadForm from './islands/LeadForm.tsx';
+---
+<section id="demo" class="bg-background py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Agende uma demonstração" title="Quer ver no seu cenário?" highlight="Fale com o comercial."
+      subtitle="Conte o que você precisa resolver — um especialista retorna pessoalmente." />
+    <LeadForm client:visible />
+  </div>
+</section>

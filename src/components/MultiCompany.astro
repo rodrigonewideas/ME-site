@@ -1,0 +1,24 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+const cards = [
+  { icon: 'lock', t: 'Acervos isolados', b: 'Cada empresa com seus dados separados e seguros (multi-tenant).' },
+  { icon: 'sliders', t: 'Troca em um clique', b: 'Alterne entre empresas pelo topo, sem novo login.' },
+  { icon: 'layout-dashboard', t: 'Visão consolidada', b: 'Acompanhe volume, pendências e conformidade de toda a carteira.' },
+];
+---
+<section id="multiempresa" class="bg-muted/40 py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Multi-empresa" title="Feito para quem administra" highlight="várias empresas."
+      subtitle="Holdings, contabilidades e BPOs não gerenciam uma empresa — gerenciam dezenas. O Malote é multi-tenant de nascença: cada empresa tem seu acervo isolado e seguro, e o gestor troca de empresa num clique, sem trocar de sistema." />
+    <div class="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
+      {cards.map((c, i) => (
+        <div class="card-base p-6" data-reveal data-reveal-delay={String(i * 80)}>
+          <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon name={c.icon} class="h-6 w-6" /></span>
+          <h3 class="mt-4 text-base font-bold text-foreground">{c.t}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.b}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

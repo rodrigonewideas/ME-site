@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Malote Eletrônico IA — Entenda o acervo inteiro, inclusive o que falta',
+  description = 'Uma IA que classifica o tipo de cada documento e identifica o dono. E que, por saber disso, mostra o que deveria estar no acervo e não está.',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL('/og-image.jpg', Astro.site).toString();
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fontes self-hosted recomendadas (sem CDN). Coloque Inter em /public/fonts e descomente:
+    <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    -->
+
+    <script is:inline>
+      // Respeita preferencia de tema do sistema (sem flash).
+      try {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <script is:inline>
+      // Reveal on-scroll com IntersectionObserver (degrada para visivel se reduced-motion).
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var els = document.querySelectorAll('[data-reveal]');
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              var el = e.target;
+              var delay = el.getAttribute('data-reveal-delay');
+              if (delay) el.style.transitionDelay = delay + 'ms';
+              el.classList.add('is-visible');
+              io.unobserve(el);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+const rows = [
+  { name: 'Ana Souza', doc: 'ASO admissional', falta: false },
+  { name: 'Carlos Mendes', doc: 'Comprovante de residência', falta: true },
+  { name: 'João Silva', doc: 'CTPS', falta: false },
+  { name: 'Marina Costa', doc: 'Certificado de reservista', falta: true },
+  { name: 'Pedro Lima', doc: 'Contrato de trabalho', falta: false },
+];
+---
+<section id="listas" class="bg-muted/40 py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="A solução" title="A IA não só organiza." highlight="Ela aponta o que falta."
+      subtitle="Para cada caso — um colaborador, uma proposta de crédito, um processo — existe um conjunto de documentos que deveria existir. A Lista Dinâmica cruza o que o acervo tem com o que ele deveria ter e revela a ausência. É auditoria por ausência, contínua." />
+
+    <div class="mx-auto max-w-3xl card-base p-4 shadow-enterprise md:p-5" data-reveal>
+      <div class="mb-3 flex items-center justify-between px-1">
+        <span class="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">Lista Dinâmica · auditoria por ausência</span>
+        <span class="text-[11px] text-muted-foreground">2 de 5 faltando</span>
+      </div>
+      <div class="grid grid-cols-[1fr_1.4fr_auto] gap-x-3 border-b border-border px-2 pb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        <span>Colaborador</span><span>Documento esperado</span><span>Situação</span>
+      </div>
+      <ul class="divide-y divide-border">
+        {rows.map((r) => (
+          <li class={`grid grid-cols-[1fr_1.4fr_auto] items-center gap-x-3 px-2 py-2.5 text-sm ${r.falta ? 'bg-secondary/5' : ''}`}>
+            <span class="truncate text-foreground">{r.name}</span>
+            <span class="truncate text-muted-foreground">{r.doc}</span>
+            <span class={`inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide ${r.falta ? 'text-secondary' : 'text-muted-foreground'}`}>
+              {r.falta ? <Icon name="alert-circle" class="h-3.5 w-3.5" /> : <Icon name="check" class="h-3.5 w-3.5" />}
+              {r.falta ? 'falta' : 'ok'}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+api/.env
+api/__pycache__/
+api/.venv/
+*.pyc
+.DS_Store

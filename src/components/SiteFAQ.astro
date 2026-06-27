@@ -1,0 +1,27 @@
+---
+import SectionHeading from './SectionHeading.astro';
+const faqs = [
+  { q: 'O Malote roda na nuvem ou na minha rede?', a: 'Por padrão, na nuvem, em conformidade com a LGPD. Para quem exige infraestrutura própria, há a opção instalada dentro da rede da organização.' },
+  { q: 'Como a IA sabe o que está faltando?', a: 'Para cada caso existe um conjunto de documentos esperado. A IA cruza o que existe com o que deveria existir e aponta a ausência.' },
+  { q: 'Os dados de cada empresa ficam separados?', a: 'Sim. O sistema é multi-tenant: cada empresa tem seu acervo isolado e seguro.' },
+  { q: 'A IA decide sozinha?', a: 'Não. A IA classifica, extrai e sugere; as decisões críticas passam por uma pessoa. E cada correção melhora o modelo.' },
+  { q: 'Quais especialistas existem?', a: 'Admissões, SST, onboarding, treinamentos e auditoria trabalhista — você ativa só os que precisa.' },
+  { q: 'Integra com o eSocial?', a: 'Sim, além de assinatura digital e notificações por WhatsApp.' },
+];
+---
+<section id="faq" class="bg-muted/40 py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Dúvidas" title="Perguntas" highlight="frequentes." />
+    <div class="mx-auto max-w-3xl space-y-3" data-reveal>
+      {faqs.map((f) => (
+        <details class="card-base group p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-foreground">
+            {f.q}
+            <svg class="h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

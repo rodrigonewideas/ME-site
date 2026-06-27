@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+import TypingQuery from './islands/TypingQuery.tsx';
+const chips = [
+  { icon: 'folder-tree', label: 'Classifica por tipo' },
+  { icon: 'user-check', label: 'Identifica o dono' },
+  { icon: 'alert-circle', label: 'Revela o que falta' },
+];
+---
+<section id="inicio" class="gradient-hero relative flex min-h-screen items-center justify-center overflow-hidden pt-28 pb-16">
+  <div class="section-container relative z-10 text-center">
+    <span class="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-medium text-white/90 backdrop-blur-sm">
+      Plataforma de inteligência documental
+    </span>
+
+    <h1 class="mx-auto mt-6 max-w-5xl text-4xl font-bold leading-[1.1] text-white md:text-6xl xl:text-7xl">
+      Entenda o acervo inteiro.<br />
+      <span class="text-secondary">Inclusive o que está faltando.</span>
+    </h1>
+
+    <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
+      Uma IA que classifica o tipo de cada documento e identifica o dono. E que, por saber disso,
+      mostra o que deveria estar no acervo e não está.
+    </p>
+
+    <div class="mt-7 flex flex-wrap justify-center gap-3">
+      {chips.map((c) => (
+        <div class="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
+          <Icon name={c.icon} class="h-4 w-4 text-secondary" />
+          <span class="text-sm font-medium text-white">{c.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-5 text-sm text-white/65">Para RH, crédito, jurídico, compliance — onde controlar documento é parte do trabalho.</p>
+
+    <TypingQuery client:visible />
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <a href="#demo" class="btn-primary">Agendar demonstração</a>
+      <a href="#problema" class="btn-ghost">Ver como funciona</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+import SectionHeading from './SectionHeading.astro';
+const dores = [
+  { t: 'Você não sabe o que falta.', b: 'O documento ausente só aparece quando alguém precisa dele: numa auditoria, numa fiscalização, numa consulta urgente.' },
+  { t: 'O dono se perde.', b: 'Sem saber de quem é cada documento, o acervo vira um amontoado — e a responsabilidade some junto.' },
+  { t: 'Organizar não basta.', b: 'Digitalizar e guardar não responde à pergunta que importa: este acervo está completo?' },
+];
+---
+<section id="problema" class="bg-background py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="O problema" title="A pilha que ninguém enxerga por inteiro." highlight="E não é só digitalizar." />
+    <div class="grid gap-5 md:grid-cols-3">
+      {dores.map((d, i) => (
+        <div class="card-base p-6" data-reveal data-reveal-delay={String(i * 80)}>
+          <h3 class="text-lg font-bold text-foreground">{d.t}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{d.b}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

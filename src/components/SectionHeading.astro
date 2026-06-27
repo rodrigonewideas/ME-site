@@ -1,0 +1,19 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  highlight?: string;
+  subtitle?: string;
+  invert?: boolean;
+  align?: 'center' | 'left';
+}
+const { eyebrow, title, highlight, subtitle, invert = false, align = 'center' } = Astro.props;
+const wrap = align === 'center' ? 'text-center max-w-3xl mx-auto' : 'max-w-3xl';
+---
+<div class={`${wrap} mb-14`} data-reveal>
+  <span class={invert ? 'inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-white/15 text-white' : 'eyebrow'}>{eyebrow}</span>
+  <h2 class={`mt-4 text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${invert ? 'text-white' : 'text-foreground'}`}>
+    {title}{highlight && <> <span class={invert ? 'text-secondary' : 'text-primary'}>{highlight}</span></>}
+  </h2>
+  {subtitle && <p class={`mt-5 text-lg leading-relaxed ${invert ? 'text-white/85' : 'text-muted-foreground'}`}>{subtitle}</p>}
+</div>

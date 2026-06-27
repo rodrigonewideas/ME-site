@@ -1,0 +1,24 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+const cards = [
+  { icon: 'lock', t: 'LGPD', b: 'Conforme às exigências de proteção de dados, por padrão.' },
+  { icon: 'server', t: 'Nuvem ou local', b: 'Rode na nuvem ou instalado dentro da sua rede — comum em órgãos públicos e empresas com política de servidores próprios.' },
+  { icon: 'history', t: 'Trilha de auditoria', b: 'Toda decisão da IA e todo acesso são registrados, rastreáveis e exportáveis.' },
+  { icon: 'shield-check', t: 'Você no comando', b: 'A IA sugere; a pessoa decide. O controle nunca sai das suas mãos.' },
+];
+---
+<section id="seguranca" class="bg-background py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Segurança" title="Infraestrutura à sua escolha." highlight="Controle sempre seu." />
+    <div class="mx-auto grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {cards.map((c, i) => (
+        <div class="card-base p-6" data-reveal data-reveal-delay={String(i * 70)}>
+          <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-secondary/10 text-secondary"><Icon name={c.icon} class="h-6 w-6" /></span>
+          <h3 class="mt-4 text-base font-bold text-foreground">{c.t}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.b}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

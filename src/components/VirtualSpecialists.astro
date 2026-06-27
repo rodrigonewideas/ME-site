@@ -1,0 +1,111 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+
+const auditorPilulas = [
+  { icon: 'gauge', label: 'Score de conformidade 0–100' },
+  { icon: 'trending-up', label: 'Estimativa de passivo trabalhista' },
+  { icon: 'shield-check', label: 'Plano de ação priorizado por ROI' },
+  { icon: 'layout-dashboard', label: 'Dashboard executivo para a diretoria' },
+];
+const team = [
+  { icon: 'user-plus', name: 'Anderson', role: 'Especialista em Admissões', area: 'Departamento Pessoal',
+    blurb: 'Recebe, classifica e confere a papelada de cada admissão, identifica o dono de cada documento e aponta o que falta no checklist antes de o vínculo começar.',
+    skills: ['Classificação e extração de dados', 'Checklist admissional', 'Domina CLT e eSocial S-2200'] },
+  { icon: 'hard-hat', name: 'Marcelo', role: 'Engenheiro de SST Virtual', area: 'Segurança do Trabalho',
+    blurb: 'Cuida da saúde e segurança: controla ASOs, EPIs e as NRs obrigatórias, agenda exames, acompanha vencimentos e mede a conformidade de SST.',
+    skills: ['Gestão de ASOs e EPIs', 'Controle de NRs e prazos', 'Score de SST de 0 a 100'] },
+  { icon: 'rocket', name: 'Igor', role: 'Especialista em Integração', area: 'Onboarding',
+    blurb: 'Conduz os primeiros 90 dias do novo colaborador: timeline de integração, liberação de acessos, treinamentos obrigatórios e check-ins programados.',
+    skills: ['Timeline de 90 dias', 'Treinamentos obrigatórios', 'Avaliação do período de experiência'] },
+  { icon: 'graduation-cap', name: 'Eduardo', role: 'Gestor de Treinamentos', area: 'Treinamento e Desenvolvimento',
+    blurb: 'Mantém as certificações em dia: controla vencimentos e reciclagens, convoca, emite certificados e mede a eficácia de cada treinamento.',
+    skills: ['Controle de vencimentos', 'Emissão de certificados', 'Avaliação de eficácia (Kirkpatrick)'] },
+];
+---
+<section id="especialistas" class="bg-background py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Inteligência aplicada" title="Não é só uma IA." highlight="É um time de especialistas."
+      subtitle="Cada colaborador virtual domina uma ocupação — um CBO — e tem a própria base de conhecimento: CLT, normas regulamentadoras, eSocial e os documentos do seu acervo. Eles não só organizam: eles trabalham. Você ativa só os que precisa." />
+
+    <article class="mx-auto mb-10 max-w-5xl rounded-2xl bg-primary p-7 text-white shadow-enterprise-lg md:p-9" data-reveal>
+      <div class="flex flex-col gap-6 md:flex-row md:items-start">
+        <span class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
+          <Icon name="shield-check" class="h-7 w-7" />
+        </span>
+        <div class="flex-1">
+          <span class="mb-2 inline-block rounded-full bg-secondary/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-secondary">Auditoria contínua</span>
+          <h3 class="text-xl font-bold md:text-2xl">Aurélio — Auditor Trabalhista IA</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/85 md:text-base">
+            Audita o seu acervo trabalhista o tempo todo em seis dimensões — documentação, prazos, cálculos, SST, eSocial e processos.
+            Calcula um score de conformidade de 0 a 100, estima o passivo trabalhista em risco e entrega um plano de ação priorizado por
+            retorno. O raio-x de risco que antes dependia de uma consultoria cara e pontual, agora rodando continuamente.
+          </p>
+          <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {auditorPilulas.map((f) => (
+              <div class="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.07] p-3">
+                <Icon name={f.icon} class="mt-0.5 h-5 w-5 flex-shrink-0 text-secondary" />
+                <span class="text-xs leading-snug text-white/90 md:text-[13px]">{f.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="mx-auto mb-10 grid max-w-5xl gap-4 md:grid-cols-2">
+      {team.map((m, i) => (
+        <article class="card-base p-6 transition-colors hover:border-secondary/30" data-reveal data-reveal-delay={String(i * 70)}>
+          <div class="mb-4 flex items-center gap-4">
+            <span class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Icon name={m.icon} class="h-6 w-6" />
+            </span>
+            <div>
+              <h3 class="text-lg font-bold leading-tight text-foreground">{m.name} <span class="font-medium text-muted-foreground">— {m.role}</span></h3>
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-secondary">{m.area}</span>
+            </div>
+          </div>
+          <p class="mb-4 text-sm leading-relaxed text-muted-foreground">{m.blurb}</p>
+          <ul class="space-y-1.5">
+            {m.skills.map((s) => (
+              <li class="flex items-center gap-2 text-xs text-foreground/80">
+                <span class="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-secondary"></span>{s}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <div class="mx-auto max-w-5xl card-base p-7 md:p-8" data-reveal>
+      <div class="flex flex-col items-start gap-7 lg:flex-row">
+        <div class="flex-1">
+          <div class="mb-3 flex items-center gap-2">
+            <Icon name="sparkles" class="h-5 w-5 text-secondary" />
+            <h3 class="text-xl font-bold text-foreground">Pergunte em linguagem natural</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-muted-foreground md:text-base">
+            Cada especialista responde usando apenas o próprio conhecimento — a legislação, os checklists e os documentos do seu acervo.
+            Quando não tem base para responder, ele diz que não sabe, em vez de inventar. Respostas confiáveis, e não chutes.
+          </p>
+        </div>
+        <div class="w-full flex-shrink-0 rounded-xl border border-border bg-muted/60 p-4 lg:w-[360px]">
+          <div class="mb-3 flex justify-end">
+            <div class="max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-3.5 py-2 text-xs leading-snug text-white">
+              Quais documentos são obrigatórios para admitir um operador de empilhadeira?
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-secondary/15 text-secondary">
+              <Icon name="message-square" class="h-3.5 w-3.5" />
+            </span>
+            <div class="rounded-2xl rounded-bl-sm border border-border bg-card px-3.5 py-2.5 text-xs leading-relaxed text-foreground/80">
+              Além do checklist admissional padrão da CLT, a função exige o treinamento de NR-11 (empilhadeira) e o ASO específico para a atividade…
+              <span class="mt-1.5 block text-[11px] text-muted-foreground">Fonte: base de conhecimento do especialista</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+const outros = [
+  { icon: 'gavel', t: 'Jurídico', b: 'Contratos, processos e prazos sob controle documental.' },
+  { icon: 'landmark', t: 'Órgãos públicos', b: 'Gestão documental com a rastreabilidade e auditabilidade que o setor exige.' },
+  { icon: 'shield-check', t: 'Compliance', b: 'Qualquer área que dependa de comprovação documental auditável.' },
+];
+---
+<section id="aplicacoes" class="bg-muted/40 py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Aplicações" title="Um motor." highlight="Muitas aplicações." />
+    <article class="mx-auto mb-6 max-w-5xl rounded-2xl bg-primary p-7 text-white shadow-enterprise-lg md:p-9" data-reveal>
+      <div class="flex items-start gap-5">
+        <span class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-secondary/20 text-secondary"><Icon name="users" class="h-7 w-7" /></span>
+        <div>
+          <span class="mb-2 inline-block rounded-full bg-secondary/20 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-secondary">Caso principal</span>
+          <h3 class="text-xl font-bold md:text-2xl">Departamentos de RH</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/85 md:text-base">Admissões, contratos, comprovantes, atestados, exames, certificações. Cada pessoa tem uma pasta esperada — e o sistema mostra, a qualquer momento, o que falta na pasta de cada colaborador.</p>
+        </div>
+      </div>
+    </article>
+    <article class="mx-auto mb-10 max-w-5xl card-base p-7" data-reveal>
+      <div class="flex items-start gap-5">
+        <span class="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-secondary/10 text-secondary"><Icon name="banknote" class="h-7 w-7" /></span>
+        <div>
+          <h3 class="text-xl font-bold text-foreground md:text-2xl">Crédito e análise financeira</h3>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">Cada operação tem um conjunto esperado de comprovantes; o sistema deixa visível, por proposta, o que está completo e o que falta antes de a análise começar.</p>
+        </div>
+      </div>
+    </article>
+    <div class="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
+      {outros.map((c, i) => (
+        <div class="card-base p-5" data-reveal data-reveal-delay={String(i * 70)}>
+          <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"><Icon name={c.icon} class="h-5 w-5" /></span>
+          <h4 class="mt-3 text-sm font-bold text-foreground">{c.t}</h4>
+          <p class="mt-1.5 text-xs leading-relaxed text-muted-foreground">{c.b}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

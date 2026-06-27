@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+import StatCounter from './islands/StatCounter.tsx';
+// TODO: numeros reais
+const stats = [
+  { value: 98, suffix: '%', prefix: '+', label: 'acerto na classificação' },
+  { value: 320, suffix: '+', label: 'tipos de documento' },
+  { value: 70, suffix: '%', prefix: '−', label: 'tempo de auditoria' },
+];
+const badges = [
+  { icon: 'lock', label: 'LGPD' },
+  { icon: 'users', label: 'Multi-tenant' },
+  { icon: 'server', label: 'Nuvem ou local' },
+  { icon: 'file-stack', label: 'Integração eSocial' },
+  { icon: 'history', label: 'Trilha de auditoria' },
+];
+---
+<section class="bg-muted/40 py-14">
+  <div class="section-container">
+    <div class="grid grid-cols-2 gap-6 md:grid-cols-4" data-reveal>
+      {stats.map((s) => (
+        <div class="text-center">
+          <div class="text-3xl font-bold text-primary md:text-4xl">
+            <StatCounter client:visible value={s.value} prefix={s.prefix ?? ''} suffix={s.suffix ?? ''} />
+          </div>
+          <div class="mt-1 text-sm text-muted-foreground">{s.label}</div>
+        </div>
+      ))}
+      <div class="text-center">
+        <div class="text-3xl font-bold text-primary md:text-4xl">Multi-empresa</div>
+        <div class="mt-1 text-sm text-muted-foreground">nativo</div>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3" data-reveal data-reveal-delay="120">
+      {badges.map((b) => (
+        <span class="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground">
+          <Icon name={b.icon} class="h-4 w-4 text-secondary" />{b.label}
+        </span>
+      ))}
+    </div>
+    {/* TODO: faixa de logos de clientes quando houver */}
+  </div>
+</section>

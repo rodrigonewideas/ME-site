@@ -1,0 +1,31 @@
+---
+import MobileNav from './islands/MobileNav.tsx';
+const links = [
+  { name: 'O problema', href: '#problema' },
+  { name: 'A solução', href: '#listas' },
+  { name: 'Especialistas', href: '#especialistas' },
+  { name: 'Segurança', href: '#seguranca' },
+  { name: 'FAQ', href: '#faq' },
+];
+---
+<header class="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/90 backdrop-blur-sm">
+  <div class="section-container">
+    <div class="flex h-[72px] items-center justify-between gap-4 lg:h-20">
+      <a href="#inicio" class="flex items-center gap-2.5" aria-label="Malote Eletrônico IA — início">
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 7 9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="m3 7 9 4 9-4"/></svg>
+        </span>
+        <span class="text-[15px] font-bold leading-tight text-foreground">Malote Eletrônico <span class="text-secondary">IA</span></span>
+      </a>
+
+      <nav class="hidden items-center gap-1 lg:flex">
+        {links.map((l) => (
+          <a href={l.href} class="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">{l.name}</a>
+        ))}
+        <a href="#demo" class="ml-2 rounded-xl bg-secondary px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-secondary/90 hover:scale-[1.02]">Agendar demonstração</a>
+      </nav>
+
+      <MobileNav client:idle />
+    </div>
+  </div>
+</header>

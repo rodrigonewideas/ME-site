@@ -1,0 +1,31 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+const steps = [
+  { icon: 'file-stack', t: 'Recepção', s: 'upload, e-mail ou scan' },
+  { icon: 'search', t: 'OCR', s: 'lê o conteúdo' },
+  { icon: 'folder-tree', t: 'Classificação', s: 'identifica o tipo' },
+  { icon: 'sliders', t: 'Extração', s: 'dados estruturados' },
+  { icon: 'user-check', t: 'Dono', s: 'a quem pertence' },
+  { icon: 'shield-check', t: 'Auditoria', s: 'o que falta + trilha', hl: true },
+];
+---
+<section id="ia" class="bg-background py-20 md:py-28">
+  <div class="section-container">
+    <SectionHeading eyebrow="Como a IA funciona" title="Entra bagunçado." highlight="Sai organizado e auditável." />
+    <div class="mx-auto flex max-w-5xl flex-col items-stretch gap-3 md:flex-row md:items-center">
+      {steps.map((st, i) => (
+        <>
+          <div class={`flex-1 rounded-xl border p-4 text-center ${st.hl ? 'border-secondary/40 bg-secondary/5' : 'border-border bg-card'}`} data-reveal data-reveal-delay={String(i * 90)}>
+            <Icon name={st.icon} class={`mx-auto h-6 w-6 ${st.hl ? 'text-secondary' : 'text-primary'}`} />
+            <div class="mt-2 text-sm font-bold text-foreground">{st.t}</div>
+            <div class="text-xs text-muted-foreground">{st.s}</div>
+          </div>
+          {i < steps.length - 1 && (
+            <Icon name="arrow-right" class="mx-auto hidden h-5 w-5 flex-shrink-0 text-muted-foreground md:block" />
+          )}
+        </>
+      ))}
+    </div>
+  </div>
+</section>
