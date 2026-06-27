@@ -4,7 +4,7 @@ import logging
 import os
 
 import httpx
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, Request, HTTPException, BackgroundTasks
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
@@ -24,6 +24,17 @@ def _hash_ip(ip: str) -> str:
     return hashlib.sha256((IP_SALT + ip).encode()).hexdigest()[:32]
 
 
+def _enviar_emails(data: dict, nome: str, email: str) -> None:
+    """Roda em background: nao atrasa a resposta ao usuario nem a derruba se o SMTP falhar."""
+    try:
+        mailer.notificar_comercial(
+            {k: data[k] for k in ("nome", "email", "empresa", "cargo", "telefone", "segmento", "porte", "mensagem")}
+        )
+        mailer.confirmar_lead(nome, email)
+    except Exception:
+        log.exception("lead gravado, mas falha no envio de e-mail")
+
+
 async def _verify_turnstile(token: str, ip: str) -> bool:
     if not TURNSTILE_SECRET:
         return True  # captcha desativado
@@ -40,7 +51,7 @@ async def _verify_turnstile(token: str, ip: str) -> bool:
 
 @router.post("/lead")
 @limiter.limit("5/minute")
-async def criar_lead(request: Request, payload: LeadIn):
+async def criar_lead(request: Request, payload: LeadIn, background: BackgroundTasks):
     ip = get_remote_address(request)
 
     # 1) Honeypot: bot preencheu campo oculto -> responde ok e descarta.
@@ -76,13 +87,7 @@ async def criar_lead(request: Request, payload: LeadIn):
         log.exception("falha ao gravar lead")
         raise HTTPException(status_code=500, detail="erro ao processar")
 
-    # E-mails: nao derrubam a resposta se o SMTP falhar (lead ja foi gravado).
-    try:
-        mailer.notificar_comercial(
-            {k: data[k] for k in ("nome", "email", "empresa", "cargo", "telefone", "segmento", "porte", "mensagem")}
-        )
-        mailer.confirmar_lead(payload.nome, str(payload.email))
-    except Exception:
-        log.exception("lead gravado, mas falha no envio de e-mail")
+    # E-mails em background: a resposta sai na hora (logo apos gravar o lead).
+    background.add_task(_enviar_emails, data, payload.nome, str(payload.email))
 
     return {"ok": True}

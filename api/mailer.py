@@ -11,6 +11,17 @@ SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASS = os.getenv("SMTP_PASS", "")
 SMTP_FROM = os.getenv("SMTP_FROM", "comercial@maloteeletronico.com.br")
 COMERCIAL = os.getenv("LEAD_RECIPIENT", "comercial@maloteeletronico.com.br")
+# Verificacao de certificado TLS. Defina SMTP_VERIFY=false para servidores com
+# certificado self-signed (ex.: smtp.niti.com.br).
+SMTP_VERIFY = os.getenv("SMTP_VERIFY", "true").lower() not in ("0", "false", "no")
+
+
+def _make_ctx() -> ssl.SSLContext:
+    ctx = ssl.create_default_context()
+    if not SMTP_VERIFY:
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+    return ctx
 
 
 def _send(to: str, subject: str, html: str, reply_to: str | None = None) -> None:
@@ -23,7 +34,7 @@ def _send(to: str, subject: str, html: str, reply_to: str | None = None) -> None
     msg.set_content("Seu cliente de e-mail nao suporta HTML.")
     msg.add_alternative(html, subtype="html")
 
-    ctx = ssl.create_default_context()
+    ctx = _make_ctx()
     if SMTP_PORT == 465:
         with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ctx, timeout=20) as s:
             if SMTP_USER:
